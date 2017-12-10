@@ -19,7 +19,7 @@ if(isset($_GET['doc_id'])){
 if(isset($_GET['sis_id'])){
     $grdian=new GuardianDao();
     $res=$grdian->showSisterProfile($_GET['sis_id']);
-    print_table($res);
+    //print_table($res);
 }
 ?>
 
