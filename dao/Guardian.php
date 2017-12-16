@@ -21,4 +21,9 @@ interface Guardian
     public function getsisReviews($sis_id);
     public function saveDocReview($doc_id,$rating,$comment);
     public function saveSisReview($sis_id,$rating,$comment);
+    public function getGuardian($user_id);
+    public function getRatingDoc($doc_id);
+    public function getRatingSis($sis_id);
+    public function saveBaby($g_id,$name,$gender,$age,$about);
+    public function getBaby($g_id);
 }

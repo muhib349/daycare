@@ -1,106 +1,94 @@
 <?php
-/*** Created by PhpStorm.
+/**
+ * Created by PhpStorm.
  * User: muhib
- * Date: 12/10/17
- * Time: 1:15 PM
+ * Date: 12/15/17
+ * Time: 10:35 AM
  */
 
-
-
-include ("../../dao/GuardianDao.php");
-
-$guardian=new GuardianDao();
-$res=$guardian->showDoctors();
-$res1=$guardian->showSisters();
-
 session_start();
+include ("../../dao/GuardianDao.php");
+$name='';
+$assign_baby='admit baby';
+$assign_url="baby_reg.php";
+$baby='';
+$guardian=new GuardianDao();
+if (isset($_SESSION['loggedin'])){
+    $name=$_SESSION['username'];
+    $rw=$guardian->getGuardian($_SESSION['user_id'])->fetch_assoc();
+    $_SESSION['g_id']=$rw['g_id'];
+    $_SESSION['gfname']=$rw['firstname'];
+    $_SESSION['glname']=$rw['lastname'];
+}
+if (isset($_POST['breg'])){
+   $fname=$_POST['first_name'];
+   $optradio=$_POST['optradio'];
+   $age=$_POST['age'];
+   $about=$_POST['about'];
+   if ($optradio=='Male'){
+       $gender='Male';
+   }
+   else
+       $gender='Female';
 
-if (isset($_POST['login-submit'])){
-    $username=$_POST['username'];
-    $password=$_POST['password'];
-    $res=$login->authentication($username,$password);
-
-    if (!$res){
-        echo 'Invalid';
-    }
-    else if ($res->num_rows>0){
-        $row=$res->fetch_assoc();
-        $type=$row['usertype'];
-        $_SESSION['uname']=$username;
-    }
-    else {
-        echo 'Yeah i got it';
+   $b_id=$guardian->saveBaby($_SESSION['g_id'],$fname,$gender,$age,$about);
+   $_SESSION['baby_id']=$b_id;
+   $_SESSION['fname']=$fname;
+}
+if (isset($_SESSION['baby_id']))
+{
+    $assign_baby=$_SESSION['fname'];
+    $assign_url="#";
+}
+else
+{
+    $rs=$guardian->getBaby($_SESSION['g_id']);
+    if ($rs->num_rows>0){
+        $rw=$rs->fetch_assoc();
+        $_SESSION['baby_id']=$rw['baby_id'];
+        $_SESSION['fname']=$rw['name'];
+        $assign_baby=$_SESSION['fname'];
+        $assign_url="#";
     }
 }
 
+$res=$guardian->showDoctors();
+$res1=$guardian->showSisters();
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Day Care Center</title>
-
-    <!-- css -->
-    <link href="../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="../../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link rel="../../stylesheet" type="text/css" href="plugins/cubeportfolio/css/cubeportfolio.min.css">
-    <link href="../../css/nivo-lightbox.css" rel="stylesheet" />
-    <link href="../../css/nivo-lightbox-theme/default/default.css" rel="stylesheet" type="text/css" />
-    <link href="../../css/owl.carousel.css" rel="stylesheet" media="screen" />
-    <link href="../../css/owl.theme.css" rel="stylesheet" media="screen" />
-    <link href="../../css/animate.css" rel="stylesheet" />
-    <link href="../../css/style.css" rel="stylesheet">
-    <link rel="../../stylesheet" href="css/index.css">
-    <link href="../../css/login.css" rel="stylesheet" type="text/css">
-    <link href="../../http://cdn.phpoll.com/css/animate.css" rel="stylesheet">
-
-    <!-- boxed bg -->
-    <link id="bodybg" href="bodybg/bg1.css" rel="stylesheet" type="text/css" />
-
-    <!-- template skin -->
-    <link id="t-colors" href="color/default.css" rel="stylesheet">
+    <title>Daycare</title>
+    <?php include '../../template/css-library.php';?>
 </head>
-<body id="page-top" data-spy="scroll" data-target=".navbar-custom">
-
-
+<body>
 <div id="wrapper">
-
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
 
         <div class="container navigation">
-
             <div class="navbar-header page-scroll">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="index.html">
-                    <img src="img/logo1/logo.png" alt="" width="200" height="60" />
+                <a class="navbar-brand" href="#">
+                    <img src="../../img/logo1/logo.png" alt="" width="200" height="60" />
                 </a>
             </div>
-
             <!-- Collect the nav links, forms, and other content for toggling -->
             <ul class="collapse navbar-collapse navbar-right navbar-main-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#intro">Home</a></li>
+                    <li class="active"><a href="<?php echo $_SERVER['PHP_SELF'];?>">Home</a></li>
                     <li><a href="#service">Service</a></li>
                     <li><a href="#">Doctors</a></li>
                     <li><a href="#facilities">Facilities</a></li>
-                    <li><a href="views/gaurdians/reg.html">Sign Up</a></li>
-
-                    <!--login form -->
                     <li class="dropdown">
-                        <a href="http://phpoll.com/login" class="dropdown-toggle" data-toggle="dropdown">Login<span class="caret"></span></a>
-                        <ul class="dropdown-menu dropdown-lr animated slideInRight" role="menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $name;?><b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href=<?php echo $assign_url;?>><?php echo $assign_baby;?></a></li>
+                            <li><a href="#">Profile</a></li>
+                            <li><a href="../../index.php?logout=1">Logout</a></li>
                         </ul>
                     </li>
-                    <!--ending login form -->
                 </ul>
         </div><!-- /.navbar-collapse -->
     </nav>  <!-- /.container -->
@@ -137,42 +125,6 @@ if (isset($_POST['login-submit'])){
     </div>
 </section>
 
-<!-- /Section: intro -->
-
-<!-- Section: boxes -->
-<section id="boxes" class="home-section paddingtop-80">
-
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-3 col-md-6">
-                <div class="wow fadeInUp" data-wow-delay="0.2s">
-                    <div class="box text-center">
-
-                        <i class="fa fa-check fa-3x circled bg-skin"></i>
-                        <h4 class="h-bold">Make an appoinment</h4>
-                        <p>
-                            Lorem ipsum dolor sit amet, nec te mollis utroque honestatis, ut utamur molestiae vix, graecis eligendi ne.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3 col-md-6">
-                <div class="wow fadeInUp" data-wow-delay="0.2s">
-                    <div class="box text-center">
-                        <i class="fa fa-user-md fa-3x circled bg-skin"></i>
-                        <h4 class="h-bold">Help by specialist</h4>
-                        <p>
-                            Lorem ipsum dolor sit amet, nec te mollis utroque honestatis, ut utamur molestiae vix, graecis eligendi ne.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</section>
-<!-- /Section: boxes -->
-
 
 <div class="row">
     <div class="col-sm-6">
@@ -187,7 +139,7 @@ if (isset($_POST['login-submit'])){
         <?php if($res->num_rows >0) : ?>
             <?php while ($rows=$res->fetch_assoc()): ?>
                 <ul class="list-group">
-                    <li class="list-group-item"><a href="views/gaurdians/profile.php?doc_id=<?php echo $rows['doc_id'];?>"><?php echo $rows['firstname'].' '.$rows['lastname'];?></a></li>
+                    <li class="list-group-item"><a href="profile.php?doc_id=<?php echo $rows['doc_id'];?>"><?php echo $rows['firstname'].' '.$rows['lastname'];?></a></li>
                 </ul>
             <?php endwhile ?>
         <?php endif ?>
@@ -196,13 +148,12 @@ if (isset($_POST['login-submit'])){
         <?php if($res1->num_rows >0) : ?>
             <?php while ($rows=$res1->fetch_assoc()): ?>
                 <ul class="list-group">
-                    <li class="list-group-item"><a href="views/gaurdians/profile.php?sis_id=<?php echo $rows['sis_id']; ?>"><?php echo $rows['firstname'].' '.$rows['lastname'];?></a></li>
+                    <li class="list-group-item"><a href="profile.php?sis_id=<?php echo $rows['sis_id']; ?>"><?php echo $rows['firstname'].' '.$rows['lastname'];?></a></li>
                 </ul>
             <?php endwhile ?>
         <?php endif ?>
     </div>
 </div>
-
 <!-- Section: services -->
 <section id="service" class="home-section nopadding paddingtop-60">
 
@@ -211,7 +162,7 @@ if (isset($_POST['login-submit'])){
         <div class="row">
             <div class="col-sm-6 col-md-6">
                 <div class="wow fadeInUp" data-wow-delay="0.2s">
-                    <img src="img/dummy/dayback1.jpg" class="img-responsive" alt="" />
+                    <img src="../../img/dummy/dayback1.jpg" class="img-responsive" alt="" />
                 </div>
             </div>
             <div class="col-sm-3 col-md-3">
@@ -291,43 +242,6 @@ if (isset($_POST['login-submit'])){
     </div>
 </section>
 <!-- /Section: services -->
-
-
-<!-- Section: works -->
-<section id="facilities" class="home-section paddingbot-60">
-    <div class="container marginbot-50">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-                <div class="wow fadeInDown" data-wow-delay="0.1s">
-                    <div class="section-heading text-center">
-                        <h2 class="h-bold">Our facilities</h2>
-                        <p>Ea melius ceteros oportere quo, pri habeo viderer facilisi ei</p>
-                    </div>
-                </div>
-                <div class="divider-short"></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12">
-                <div class="wow bounceInUp" data-wow-delay="0.2s">
-                    <div id="owl-works" class="owl-carousel">
-                        <div class="item"><a href="img/photo/1.jpg" title="This is an image title" data-lightbox-gallery="gallery1" data-lightbox-hidpi="img/works/1@2x.jpg"><img src="img/photo/1.jpg" class="img-responsive" alt="img"></a></div>
-                        <div class="item"><a href="img/photo/2.jpg" title="This is an image title" data-lightbox-gallery="gallery1" data-lightbox-hidpi="img/works/2@2x.jpg"><img src="img/photo/2.jpg" class="img-responsive " alt="img"></a></div>
-                        <div class="item"><a href="img/photo/3.jpg" title="This is an image title" data-lightbox-gallery="gallery1" data-lightbox-hidpi="img/works/3@2x.jpg"><img src="img/photo/3.jpg" class="img-responsive " alt="img"></a></div>
-                        <div class="item"><a href="img/photo/4.jpg" title="This is an image title" data-lightbox-gallery="gallery1" data-lightbox-hidpi="img/works/4@2x.jpg"><img src="img/photo/4.jpg" class="img-responsive " alt="img"></a></div>
-                        <div class="item"><a href="img/photo/5.jpg" title="This is an image title" data-lightbox-gallery="gallery1" data-lightbox-hidpi="img/works/5@2x.jpg"><img src="img/photo/5.jpg" class="img-responsive " alt="img"></a></div>
-                        <div class="item"><a href="img/photo/6.jpg" title="This is an image title" data-lightbox-gallery="gallery1" data-lightbox-hidpi="img/works/6@2x.jpg"><img src="img/photo/6.jpg" class="img-responsive " alt="img"></a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- /Section: works -->
-
 <footer>
 
     <div class="container">
@@ -335,7 +249,7 @@ if (isset($_POST['login-submit'])){
             <div class="col-sm-6 col-md-4">
                 <div class="wow fadeInDown" data-wow-delay="0.1s">
                     <div class="widget">
-                        <h5>About Medicio</h5>
+                        <h5>About Day Care</h5>
                         <p>
                             Lorem ipsum dolor sit amet, ne nam purto nihil impetus, an facilisi accommodare sea
                         </p>
@@ -413,22 +327,7 @@ if (isset($_POST['login-submit'])){
                 <div class="col-sm-6 col-md-6 col-lg-6">
                     <div class="wow fadeInLeft" data-wow-delay="0.1s">
                         <div class="text-left">
-                            <p>&copy;Copyright - Medicio Theme. All rights reserved.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-6">
-                    <div class="wow fadeInRight" data-wow-delay="0.1s">
-                        <div class="text-right">
-                            <div class="credits">
-                                <!--
-                                  All the links in the footer should remain intact.
-                                  You can delete the links only if you purchased the pro version.
-                                  Licensing information: https://bootstrapmade.com/license/
-                                  Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Medicio
-                                -->
-                                <a href="https://bootstrapmade.com/bootstrap-education-templates/">Bootstrap Education Templates</a> by BootstrapMade
-                            </div>
+                            <p>&copy;Copyright - Daycare. All rights reserved.</p>
                         </div>
                     </div>
                 </div>
@@ -437,23 +336,9 @@ if (isset($_POST['login-submit'])){
     </div>
 </footer>
 
-</div>
-<a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
 
-<!-- Core JavaScript Files -->
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.easing.min.js"></script>
-<script src="js/wow.min.js"></script>
-<script src="js/jquery.scrollTo.js"></script>
-<script src="js/jquery.appear.js"></script>
-<script src="js/stellar.js"></script>
-<script src="plugins/cubeportfolio/js/jquery.cubeportfolio.min.js"></script>
-<script src="js/owl.carousel.min.js"></script>
-<script src="js/nivo-lightbox.min.js"></script>
-<script src="js/custom.js"></script>
 
+
+<?php include '../../template/js-library.php';?>
 </body>
-
 </html>
-

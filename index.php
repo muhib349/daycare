@@ -1,6 +1,41 @@
 
 <?php
+
+session_start();
 include ("dao/GuardianDao.php");
+include "dao/Login.php";
+$guardian=new GuardianDao();
+$login=new Login();
+$message='';
+if (isset($_POST['login-form'])){
+    $username=$_POST['username'];
+    $password=$_POST['password'];
+    $res=$login->authentication($username,$password);
+
+   if ($res->num_rows>0){
+        $row=$res->fetch_assoc();
+        $type=$row['usertype'];
+        $_SESSION['loggedin']=true;
+        $_SESSION['username']=$row['username'];
+        $_SESSION['user_id']=$row['user_id'];
+        if($type=='guardian')
+        {
+            header("Location:views/gaurdians/home.php");
+        }
+        else if ($type=='doctor') {
+            header("Location:views/doctors/home.php");
+        }
+        else if ($type=='sister'){
+            echo $type;
+        }
+        else
+            echo $type;
+    }
+    else {
+        $message="Invalid username or password";
+    }
+}
+
 if(isset($_POST['signup'])) {
     $fname=$_POST['first_name'];
     $lname=$_POST['last_name'];
@@ -10,28 +45,24 @@ if(isset($_POST['signup'])) {
     $address=$_POST['address'];
     $contact=$_POST['contact_no'];
     $relation=$_POST['relation'];
-    $guardian=new GuardianDao();
     $guardian->save($uname,$pass,'guardian',$contact,$fname,$lname,$email,$address,$relation);
 }
-$guardian=new GuardianDao();
+
+if (isset($_GET['logout'])==1)
+{
+    session_destroy();
+}
 $res=$guardian->showDoctors();
 $res1=$guardian->showSisters();
-
 ?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <title>Day Care</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>Day Care Center</title>
-
     <!-- css -->
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -53,8 +84,6 @@ $res1=$guardian->showSisters();
     <link id="t-colors" href="color/default.css" rel="stylesheet">
 </head>
 <body id="page-top" data-spy="scroll" data-target=".navbar-custom">
-
-
 <div id="wrapper">
 
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
@@ -65,7 +94,7 @@ $res1=$guardian->showSisters();
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="index.php">
                     <img src="img/logo1/logo.png" alt="" width="200" height="60" />
                 </a>
             </div>
@@ -81,11 +110,12 @@ $res1=$guardian->showSisters();
 
                     <!--login form -->
                     <li class="dropdown">
-                        <a href="http://phpoll.com/login" class="dropdown-toggle" data-toggle="dropdown">Login<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login<span class="caret"></span></a>
                         <ul class="dropdown-menu dropdown-lr animated slideInRight" role="menu">
                             <div class="col-lg-12">
                                 <div class="text-center"><h3><b>Login</b></h3></div>
-                                <form id="ajax-login-form" action="views/gaurdians/home.php" method="post" role="form" autocomplete="off">
+                                <form  action="<?php echo $_SERVER['PHP_SELF']?>" method="post" role="form" autocomplete="off">
+                                    <?php echo  $message;?>
                                     <div class="form-group">
                                         <label for="username">Username</label>
                                         <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" autocomplete="off" required>
@@ -102,7 +132,7 @@ $res1=$guardian->showSisters();
                                                 <label for="remember"> Remember Me</label>
                                             </div>
                                             <div class="col-xs-5 pull-right">
-                                                <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-success" value="Login">
+                                                <input type="submit" name="login-form" id="login-submit" tabindex="4" class="form-control btn btn-success" value="Login">
                                             </div>
                                         </div>
                                     </div>
@@ -209,7 +239,7 @@ $res1=$guardian->showSisters();
         <?php if($res->num_rows >0) : ?>
             <?php while ($rows=$res->fetch_assoc()): ?>
                 <ul class="list-group">
-                    <li class="list-group-item"><a href="views/gaurdians/profile.php?doc_id=<?php echo $rows['doc_id'];?>"><?php echo $rows['firstname'].' '.$rows['lastname'];?></a></li>
+                    <li class="list-group-item"><a href="views/profile.php?doc_id=<?php echo $rows['doc_id'];?>"><?php echo $rows['firstname'].' '.$rows['lastname'];?></a></li>
                 </ul>
             <?php endwhile ?>
         <?php endif ?>
@@ -218,7 +248,7 @@ $res1=$guardian->showSisters();
         <?php if($res1->num_rows >0) : ?>
             <?php while ($rows=$res1->fetch_assoc()): ?>
                 <ul class="list-group">
-                    <li class="list-group-item"><a href="views/gaurdians/profile.php?sis_id=<?php echo $rows['sis_id']; ?>"><?php echo $rows['firstname'].' '.$rows['lastname'];?></a></li>
+                    <li class="list-group-item"><a href="views/profile.php?sis_id=<?php echo $rows['sis_id']; ?>"><?php echo $rows['firstname'].' '.$rows['lastname'];?></a></li>
                 </ul>
             <?php endwhile ?>
         <?php endif ?>

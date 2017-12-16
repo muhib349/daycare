@@ -11,4 +11,6 @@ interface Sisters
     public function currentAssignedBaby($sis_id);
     public function vistedBabyBySis($sis_id);
     public function saveVisitedBabySis($sis_id,$baby_id);
+    public function isBooked($sis_id);
+
 }

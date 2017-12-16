@@ -6,13 +6,16 @@
  * Time: 11:01 AM
  */
 
-include "Connection.php";
+
 class Login
 {
+    private function getConntection(){
+        return new mysqli('localhost','root','__muhib','daycare');
+    }
+
     public function authentication($username,$password){
-        $conn=new Connection();
-        $db=$conn->get_connection();
-        $sql = "SELECT `usertype` FROM `users` WHERE `username`='$username' AND `password`='$password'";
+        $db=$this->getConntection();
+        $sql = "SELECT `user_id`,`username`,`usertype` FROM `users` WHERE `username`='$username' AND `password`='$password'";
         $res=$db->query($sql);
         $db->close();
         return $res;

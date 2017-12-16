@@ -68,8 +68,18 @@ $(document).ready(function() {
                     }
                 }
             },
+            optradio: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please enter your Email Address'
+                    },
+                }
+            },
             contact_no: {
                 validators: {
+                    notEmpty: {
+                        message: 'Please Add your contact'
+                    },
                     stringLength: {
                         min: 11,
                         max: 11,
