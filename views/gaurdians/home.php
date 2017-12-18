@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: muhib
- * Date: 12/15/17
- * Time: 10:35 AM
- */
 
 session_start();
 include ("../../dao/GuardianDao.php");

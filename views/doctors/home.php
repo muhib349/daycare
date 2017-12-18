@@ -12,6 +12,7 @@ if (isset($_SESSION['loggedin']))
         $_SESSION['doc_id']=$row1['doc_id'];
         $_SESSION['fname']=$row1['firstname'];
         $_SESSION['lname']=$row1['lastname'];
+
     }
 }
 else
@@ -126,13 +127,10 @@ if (isset($_SESSION['doc_id'])){
 
             <div class="row">
                 <div class="col-sm-3">
-                    <button>set</button>
                 </div>
                 <div class="col-sm-3">
-                    <button>set</button>
                 </div>
                 <div class="col-sm-3">
-                    <button>set</button>
                 </div>
             </div>
         </div>

@@ -26,7 +26,7 @@ if (isset($_POST['login-form'])){
             header("Location:views/doctors/home.php");
         }
         else if ($type=='sister'){
-            echo $type;
+            header("Location:views/sisters/home.php");
         }
         else
             echo $type;
@@ -168,7 +168,7 @@ $res1=$guardian->showSisters();
                         <h2 class="h-ultra">Day Care</h2>
                     </div>
                     <div class="wow fadeInUp" data-wow-offset="0" data-wow-delay="0.1s">
-                        <h4 class="h-light">Caring For Your Children As If They Were Our Own</h4>
+                        <h4 class="h-light">we are promising to give our best to your children</h4>
                     </div>
                     <div class="well well-trans">
                         <div class="wow fadeInRight" data-wow-delay="0.1s">
@@ -387,7 +387,7 @@ $res1=$guardian->showSisters();
             <div class="col-sm-6 col-md-4">
                 <div class="wow fadeInDown" data-wow-delay="0.1s">
                     <div class="widget">
-                        <h5>About Medicio</h5>
+                        <h5>About Daycare</h5>
                         <p>
                             Lorem ipsum dolor sit amet, ne nam purto nihil impetus, an facilisi accommodare sea
                         </p>
@@ -398,7 +398,7 @@ $res1=$guardian->showSisters();
                         <h5>Information</h5>
                         <ul>
                             <li><a href="#">Home</a></li>
-                            <li><a href="#">Laboratory</a></li>
+                            <li><a href="#">Playground</a></li>
                             <li><a href="#">Medical treatment</a></li>
                             <li><a href="#">Terms & conditions</a></li>
                         </ul>
@@ -408,7 +408,7 @@ $res1=$guardian->showSisters();
             <div class="col-sm-6 col-md-4">
                 <div class="wow fadeInDown" data-wow-delay="0.1s">
                     <div class="widget">
-                        <h5>Medicio center</h5>
+                        <h5>Daycare center</h5>
                         <p>
                             Nam leo lorem, tincidunt id risus ut, ornare tincidunt naqunc sit amet.
                         </p>
@@ -417,19 +417,19 @@ $res1=$guardian->showSisters();
                     <span class="fa-stack fa-lg">
 									<i class="fa fa-circle fa-stack-2x"></i>
 									<i class="fa fa-calendar-o fa-stack-1x fa-inverse"></i>
-								</span> Monday - Saturday, 8am to 10pm
+								</span> Sunday - Thursday, 8am to 10pm
                             </li>
                             <li>
                     <span class="fa-stack fa-lg">
 									<i class="fa fa-circle fa-stack-2x"></i>
 									<i class="fa fa-phone fa-stack-1x fa-inverse"></i>
-								</span> +62 0888 904 711
+								</span> +88017xxxxxxxx
                             </li>
                             <li>
                     <span class="fa-stack fa-lg">
 									<i class="fa fa-circle fa-stack-2x"></i>
 									<i class="fa fa-envelope-o fa-stack-1x fa-inverse"></i>
-								</span> hello@medicio.com
+								</span> hello@daycare.com
                             </li>
 
                         </ul>

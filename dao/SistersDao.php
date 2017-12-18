@@ -42,7 +42,16 @@ class SistersDao  implements Sisters
     public function isBooked($sis_id)
     {
         $db=$this->getConntection();
-        $sql = "SELECT `isBooked` FROM `sisters` WHERE sis_id=$sis_id";
+        $sql = "SELECT baby.name,baby.about,baby.gender FROM baby WHERE baby.baby_id=(SELECT sisters.isBooked FROM sisters WHERE sisters.sis_id=$sis_id)";
+        $res=$db->query($sql);
+        $db->close();
+        return $res;
+    }
+
+    public function getSister($user_id)
+    {
+        $db=$this->getConntection();
+        $sql = "SELECT sis_id,`firstname`,`lastname` FROM `sisters` WHERE `user_id`=$user_id";
         $res=$db->query($sql);
         $db->close();
         return $res;

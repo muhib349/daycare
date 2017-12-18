@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: muhib
- * Date: 12/15/17
- * Time: 12:39 PM
- */
+
 include '../dao/GuardianDao.php';
 include '../logical/guardian.php';
 $name='';

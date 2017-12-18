@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: muhib
- * Date: 12/8/17
- * Time: 7:28 PM
- */
-
 
 include 'Doctor.php';
 class DoctorDao implements Doctor
@@ -58,8 +51,6 @@ class DoctorDao implements Doctor
         $db->close();
         return $res;
     }
-
-
     public function slotStatus1($doc_id)
     {
         $db=$this->getConntection();
@@ -68,7 +59,6 @@ class DoctorDao implements Doctor
         $db->close();
         return $res;
     }
-
     public function slotStatus2($doc_id)
     {
         $db=$this->getConntection();
