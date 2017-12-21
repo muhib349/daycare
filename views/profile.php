@@ -3,17 +3,16 @@
 include '../dao/GuardianDao.php';
 include '../logical/guardian.php';
 $name='';
+$grdian=new GuardianDao();
 if(isset($_GET['doc_id'])){
-    $grdian=new GuardianDao();
     $res=$grdian->showDoctorProfile($_GET['doc_id']);
 }
 if(isset($_GET['sis_id'])){
-    $grdian=new GuardianDao();
     $res=$grdian->showSisterProfile($_GET['sis_id']);
 }
-
-if ($res->num_rows>0)
+if ($res->num_rows>0){
     $row=$res->fetch_assoc();
+}
 else
 {
     header("Location:gaurdians/home.php");

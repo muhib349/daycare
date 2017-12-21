@@ -25,4 +25,5 @@ interface Doctor
     public function updateSlot_1($doc_id,$baby_id);
     public function updateSlot_2($doc_id,$baby_id);
     public function updateSlot_3($doc_id,$baby_id);
+    public function findDoctor($name);
 }

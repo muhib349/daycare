@@ -30,7 +30,7 @@ if(isset($_GET['sis_id'])){
     $sis_id=$_GET['sis_id'];
     $_SESSION['sis_id']=$sis_id;
     $res=$grdian->showSisterProfile($sis_id);
-    $booked=$sis ->isBooked($sis_id)->fetch_assoc();
+    $booked=$sis->isBooked($sis_id);
     $tab_rev=$grdian->getsisReviews($sis_id);
     $rating_tab=$grdian->getRatingSis($sis_id);
 }
@@ -101,46 +101,29 @@ if ($res->num_rows>0)
                     <li><p><span class="glyphicon glyphicon-envelope one" style="width:50px;"></span><?php echo $row['email'];?></p></li>
                     <li><p><span class="glyphicon glyphicon-map-marker one" style="width:50px;"></span><?php echo $row['address'];?></p></li>
                 </ul>
-
-                <?php
-                if (isset($_SESSION['baby_id'])){
-                    if ($type=='doctor')
-                    {
-
-                        echo '<p class="text-info">Assign Your Doctor in a Proper Time.</p>';
-                        if(!$slot['slot-1']){
-                            echo '<button id="btn1" onclick="updateDoc('.$_SESSION['baby_id'].','.$_SESSION['doc_id'].',1)" type="button" class="btn btn-primary active">slot-1(10am-11am)</button>';
-                        }
-                        else{
-
-                            echo '<button disabled class="btn btn-primary disabled">Not Available</button>';
-
-                        }
-                        if(!$slot['slot-2']){
-                            echo '<button id="btn2" onclick="updateDoc('.$_SESSION['baby_id'].','.$_SESSION['doc_id'].',2)" class="btn btn-primary active">slot-2(11am-12pm)</button>';
-                        }
-                        else{
-                            echo '<button disabled class="btn btn-primary disabled">Not Available</button>';
-                        }
-                        if(!$slot['slot-3']){
-                            echo '<button id="btn3" onclick="updateDoc('.$_SESSION['baby_id'].','.$_SESSION['doc_id'].',3)" class="btn btn-primary">slot-3(3pm-4pm)</button>';
-                        }
-                        else{
-                            echo '<button type="button" class="btn btn-primary disabled">Not Available</button>';
-                        }
-                    }
-                    else{
-                        if (!$booked['isBooked']){
-                            echo '<button onclick="updateSis('.$_SESSION['baby_id'].','.$_SESSION['sis_id'].')" type="button" class="btn btn-primary"><a href="profile.php">Assign</a></button>';
-                        }
-                        else{
-                            echo '<button type="button" class="btn btn-primary disabled">Booked</button>';
-                        }
-                    }
-                }
-                else
-                    echo '<h4>Admit Your Baby</h4>';
-                ?>
+                <? if ($type=='doctor'): ?>
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <td>Slot-1</td>
+                            <td>10.00am-10:30am</td>
+                            <td><input onclick="updateDoc1()" id="btn1" type="button" value="Assign" class="btn btn-primary"></td>
+                        </tr>
+                        <tr>
+                            <td>Slot-2</td>
+                            <td>10:30am-11.00am</td>
+                            <td><input onclick="updateDoc2()" id="btn2" type="button" value="Assign" class="btn btn-primary"></td>
+                        </tr>
+                        <tr>
+                            <td>Slot-3</td>
+                            <td>11.00am-11:30am</td>
+                            <td><input onclick="updateDoc3()" id="btn3" type="button" value="Assign" class="btn btn-primary"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <? else: ?>
+                    <h1>sister</h1>
+                <? endif; ?>
                 <div>
                     <span id="msg" class="label label-success"></span>
                 </div>
@@ -161,5 +144,6 @@ if ($res->num_rows>0)
 
 <?php include '../../template/js-library.php';?>
 <script src="../../resources/js/gprofile.js"></script>
+<script src="../../resources/js/profile.js"></script>
 </body>
 </html>

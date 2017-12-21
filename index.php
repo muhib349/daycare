@@ -76,28 +76,29 @@ $res1=$guardian->showSisters();
     <link rel="stylesheet" href="css/index.css">
     <link href="css/login.css" rel="stylesheet" type="text/css">
     <link href="http://cdn.phpoll.com/css/animate.css" rel="stylesheet">
-
+    <link href="css/search.css" rel="stylesheet" type="text/css">
     <!-- boxed bg -->
     <link id="bodybg" href="bodybg/bg1.css" rel="stylesheet" type="text/css" />
 
     <!-- template skin -->
     <link id="t-colors" href="color/default.css" rel="stylesheet">
+
 </head>
 <body id="page-top" data-spy="scroll" data-target=".navbar-custom">
 <div id="wrapper">
 
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <!-- search input field -->
+        <div id="custom-search-input">
+            <div class="input-group col-md-4">
+                <input type="text" class=" search-query form-control" name="search" id="search" placeholder="Search doctor or sister" autocomplete="off" />
+                <div id="namelist">
+                </div>
+            </div>
+        </div>
 
         <div class="container navigation">
-
-            <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
-                    <i class="fa fa-bars"></i>
-                </button>
-                <a class="navbar-brand" href="index.php">
-                    <img src="img/logo1/logo.png" alt="" width="200" height="60" />
-                </a>
-            </div>
+            <!-- logo code here -->
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <ul class="collapse navbar-collapse navbar-right navbar-main-collapse">
@@ -107,7 +108,6 @@ $res1=$guardian->showSisters();
                     <li><a href="#">Doctors</a></li>
                     <li><a href="#facilities">Facilities</a></li>
                     <li><a href="views/gaurdians/reg.html">Sign Up</a></li>
-
                     <!--login form -->
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login<span class="caret"></span></a>
@@ -366,12 +366,12 @@ $res1=$guardian->showSisters();
             <div class="col-sm-12 col-md-12 col-lg-12">
                 <div class="wow bounceInUp" data-wow-delay="0.2s">
                     <div id="owl-works" class="owl-carousel">
-                        <div class="item"><a href="img/photo/1.jpg" title="This is an image title" data-lightbox-gallery="gallery1" data-lightbox-hidpi="img/works/1@2x.jpg"><img src="img/photo/1.jpg" class="img-responsive" alt="img"></a></div>
+                        <div class="item"><a href="img/photo/7.jpg" title="This is an image title" data-lightbox-gallery="gallery1" data-lightbox-hidpi="img/works/7@2x.jpg"><img src="img/photo/7.jpg" class="img-responsive" alt="img"></a></div>
                         <div class="item"><a href="img/photo/2.jpg" title="This is an image title" data-lightbox-gallery="gallery1" data-lightbox-hidpi="img/works/2@2x.jpg"><img src="img/photo/2.jpg" class="img-responsive " alt="img"></a></div>
-                        <div class="item"><a href="img/photo/3.jpg" title="This is an image title" data-lightbox-gallery="gallery1" data-lightbox-hidpi="img/works/3@2x.jpg"><img src="img/photo/3.jpg" class="img-responsive " alt="img"></a></div>
+                        <div class="item"><a href="img/photo/3.jpg" title="This is an image title" data-lightbox-gallery="gallery1" data-lightbox-hidpi="img/works/3@2x.jpg"><img src="img/photo/3.JPG" class="img-responsive " alt="img"></a></div>
                         <div class="item"><a href="img/photo/4.jpg" title="This is an image title" data-lightbox-gallery="gallery1" data-lightbox-hidpi="img/works/4@2x.jpg"><img src="img/photo/4.jpg" class="img-responsive " alt="img"></a></div>
-                        <div class="item"><a href="img/photo/5.jpg" title="This is an image title" data-lightbox-gallery="gallery1" data-lightbox-hidpi="img/works/5@2x.jpg"><img src="img/photo/5.jpg" class="img-responsive " alt="img"></a></div>
-                        <div class="item"><a href="img/photo/6.jpg" title="This is an image title" data-lightbox-gallery="gallery1" data-lightbox-hidpi="img/works/6@2x.jpg"><img src="img/photo/6.jpg" class="img-responsive " alt="img"></a></div>
+                        <div class="item"><a href="img/photo/5.jpg" title="This is an image title" data-lightbox-gallery="gallery1" data-lightbox-hidpi="img/works/5@2x.jpg"><img src="img/photo/5.JPG" class="img-responsive " alt="img"></a></div>
+                        <div class="item"><a href="img/photo/6.jpg" title="This is an image title" data-lightbox-gallery="gallery1" data-lightbox-hidpi="img/works/6@2x.jpg"><img src="img/photo/6.jpeg" class="img-responsive " alt="img"></a></div>
                     </div>
                 </div>
             </div>
@@ -490,8 +490,9 @@ $res1=$guardian->showSisters();
 </footer>
 
 </div>
-<a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
 
+
+<a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
 <!-- Core JavaScript Files -->
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -504,7 +505,7 @@ $res1=$guardian->showSisters();
 <script src="js/owl.carousel.min.js"></script>
 <script src="js/nivo-lightbox.min.js"></script>
 <script src="js/custom.js"></script>
-
+<script src="resources/js/search.js"></script>
 </body>
 
 </html>

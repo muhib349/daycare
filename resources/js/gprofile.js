@@ -1,23 +1,35 @@
-function updateDoc(baby_id,doc_id,slot_no) {
-    $.post('../../ajax/assign.php',{doc_id:doc_id,baby_id:baby_id,slot_no:slot_no},function (data) {
+
+function updateDoc1() {
+    $.post('../../ajax/fetch.php',{updateDoc1:'update1'},function (data) {
         if (data==1){
-            $('#btn1').text('Success');
-            $('#msg').text('You are successfully added doctor')
+            document.getElementById("btn1").disabled=true;
+            document.getElementById("btn1").value='Taken';
         }
-        else if(data==2){
-            $('#btn2').text('Success');
-            $('#msg').text('You are successfully added doctor')
+        else {
+            $('#msg').html(data);
         }
-        else if (data==3)
-        {
-            $('#btn3').text('Success');
-            $('#msg').text('You are successfully added doctor')
+    });
+}
+function updateDoc2() {
+    $.post('../../ajax/fetch.php',{updateDoc2:'update2'},function (data) {
+        if (data==1){
+            document.getElementById("btn2").disabled=true;
+            document.getElementById("btn2").value='Taken';
         }
-        else
-            $('#msg').text(data);
+        else {
+            $('#msg').html(data);
+        }
+    });
+}
+function updateDoc3() {
+    $.post('../../ajax/fetch.php',{updateDoc3:'update3'},function (data) {
+        if (data==1){
+            document.getElementById("btn3").disabled=true;
+            document.getElementById("btn3").value='Taken';
+        }
+        else {
+            $('#msg').html(data);
+        }
     });
 }
 
-function updateSis(baby_id,sis_id) {
-    alert(doc_id);
-}

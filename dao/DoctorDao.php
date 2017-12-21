@@ -142,6 +142,22 @@ class DoctorDao implements Doctor
         $db->close();
         return $res;
     }
+
+    public function findDoctor($name)
+    {
+        $db = $this->getConntection();
+        $sql = "SELECT tbl2.user_id,tbl2.id,tbl2.name,tbl2.usertype FROM (SELECT tbl.user_id,tbl.id,CONCAT(firstname,' ',lastname) AS name,users.usertype FROM
+
+            ((SELECT doctors.user_id,doctors.doc_id AS id,doctors.firstname,doctors.lastname FROM doctors)
+
+            UNION
+
+            (SELECT sisters.user_id,sisters.sis_id AS id,sisters.firstname,sisters.lastname FROM sisters)) AS tbl JOIN users ON tbl.user_id=users.user_id) AS tbl2 WHERE tbl2.name LIKE '%$name%'";
+        $res = $db->query($sql);
+        $db->close();
+        return $res;
+    }
+
     public function saveVisitedBabyDoc($doc_id,$baby_id)
     {
         $db=$this->getConntection();
