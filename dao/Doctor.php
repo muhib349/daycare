@@ -8,7 +8,7 @@
 
 interface Doctor
 {
-    public function assignOneSlot($doc_id,$baby_id);
+    public function assignOneSlot($baby_id);
     public function slotStatus($doc_id);
     public function slotStatus1($doc_id);
     public function slotStatus2($doc_id);
@@ -25,5 +25,5 @@ interface Doctor
     public function updateSlot_1($doc_id,$baby_id);
     public function updateSlot_2($doc_id,$baby_id);
     public function updateSlot_3($doc_id,$baby_id);
-    public function findDoctor($name);
+    public function findDoctorAndSister($name);
 }

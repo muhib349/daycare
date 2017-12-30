@@ -18,7 +18,7 @@ class SistersDao  implements Sisters
     public function currentAssignedBaby($sis_id)
     {
         $db=$this->getConntection();
-        $sql = "SELECT baby.name AS name,baby.gender AS gender,baby.age AS age,baby.about AS about FROM baby WHERE baby.baby_id=(SELECT isBooked FROM sisters WHERE sis_id=$sis_id)";
+        $sql = "SELECT baby.name,baby.baby_id,baby.gender,baby.about,baby.age FROM `assigned` JOIN baby ON baby.baby_id=assigned.baby_id WHERE assigned.sis_id=$sis_id";
         $res=$db->query($sql);
         $db->close();
         return $res;
@@ -39,14 +39,24 @@ class SistersDao  implements Sisters
         $db->close();
     }
 
-    public function isBooked($sis_id)
+    public function numOfAssignedBaby($sis_id)
     {
         $db=$this->getConntection();
-        $sql = "SELECT baby.name,baby.about,baby.gender FROM baby WHERE baby.baby_id=(SELECT sisters.isBooked FROM sisters WHERE sisters.sis_id=$sis_id)";
+        $sql = "SELECT COUNT(sis_id) AS num FROM `assigned` GROUP BY sis_id HAVING sis_id=$sis_id";
         $res=$db->query($sql);
         $db->close();
         return $res;
     }
+
+    public function duplicateAssign($b_id)
+    {
+        $db=$this->getConntection();
+        $sql = "SELECT * FROM `assigned` WHERE baby_id=$b_id";
+        $res=$db->query($sql);
+        $db->close();
+        return $res;
+    }
+
 
     public function getSister($user_id)
     {
@@ -56,4 +66,21 @@ class SistersDao  implements Sisters
         $db->close();
         return $res;
     }
+
+    public function assignBaby($b_id, $s_id)
+    {
+        $db=$this->getConntection();
+        $sql = "INSERT INTO `assigned`(`sis_id`, `baby_id`) VALUES ('".$s_id."','".$b_id."')";
+        $db->query($sql);
+        $db->close();
+    }
+
+    public function removeAssignedBaby($baby_id)
+    {
+        $db=$this->getConntection();
+        $sql = "DELETE FROM `assigned` WHERE baby_id=$baby_id";
+        $db->query($sql);
+        $db->close();
+    }
+
 }

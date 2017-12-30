@@ -3,6 +3,7 @@ session_start();
 include '../../dao/DoctorDao.php';
 $doctor=new DoctorDao();
 $name='';
+$i=0;
 if (isset($_SESSION['loggedin']))
 {
     $name=$_SESSION['username'];
@@ -27,7 +28,7 @@ if (isset($_SESSION['doc_id'])){
 }
 ?>
 
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <title>Home</title>
     <?php include '../../template/css-library.php';?>
@@ -69,20 +70,18 @@ if (isset($_SESSION['doc_id'])){
             <h2><?php echo $_SESSION['fname'].' '.$_SESSION['lname'];?></h2>
 
             <?php if($tble5->num_rows >0) : ?>
-            <table class="table table-hover">
+            <table class="table table-bordered">
                 <thead>
                 <tr>
+                    <th>#</th>
                     <th>Name</th>
-                    <th>Gender</th>
-                    <th>Age</th>
                 </tr>
                 </thead>
                 <tbody>
                     <?php while ($row5=$tble5->fetch_assoc()): ?>
                         <tr>
+                            <td><?php echo ++$i;?></td>
                             <td><?php echo $row5['name'];?></td>
-                            <td><?php echo $row5['gender'];?></td>
-                            <td><?php echo $row5['age'];?></td>
                         </tr>
                     <?php endwhile ?>
                 </tbody>
@@ -94,33 +93,33 @@ if (isset($_SESSION['doc_id'])){
         <div class="col-sm-9">
             <div class="row" style="height: 400px">
                 <div class="col-sm-3" >
-                    <h2><span class="label label-info">Slot-1</span></h2><h6><span>(10am-11am)</span></h6>
+                    <h2><span class="label label-info">Slot-1</span></h2>
                     <?php if ($tble2->num_rows>0):?>
                         <?php $row2=$tble2->fetch_assoc(); ?>
                         <h4><?php echo $row2['name'];?></h4>
-                        <p><?php echo $row2['about'];?></p>
+                        <a href="#"><input class="btn  btn-primary" type="button" value="details"></a>
                         <? else: ?>
-                        <h4>No one assign yet.</h4>
+                        <h4>Empty</h4>
                     <?php endif; ?>
                 </div>
                 <div class="col-sm-3">
-                    <h2><span class="label label-info">Slot-2</span></h2><h6><span>(12pm-1pm)</span></h6>
+                    <h2><span class="label label-info">Slot-2</span></h2>
                     <?php if ($tble3->num_rows>0):?>
                         <?php $row3=$tble3->fetch_assoc(); ?>
                         <h4><?php echo $row3['name'];?></h4>
-                        <p><?php echo $row3['about'];?></p>
+                        <a href="#"><input class="btn  btn-primary" type="button" value="details"></a>
                     <? else: ?>
-                        <h4>No one assign yet.</h4>
+                        <h4>Empty</h4>
                     <?php endif; ?>
                 </div>
                 <div class="col-sm-3">
-                    <h2><span class="label label-info">Slot-3</span></h2><h6><span>(3pm-4pm)</span></h6>
+                    <h2><span class="label label-info">Slot-3</span>
                     <?php if ($tble4->num_rows>0):?>
                         <?php $row4=$tble4->fetch_assoc(); ?>
                         <h4><?php echo $row4['name'];?></h4>
-                        <p><?php echo $row4['about'];?></p>
+                        <a href="#"><input class="btn  btn-primary" type="button" value="details"></a>
                     <? else: ?>
-                        <h4>No one assign yet.</h4>
+                        <h4>Empty</h4>
                     <?php endif; ?>
                 </div>
             </div>

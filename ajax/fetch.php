@@ -3,9 +3,9 @@ session_start();
 include '../dao/DoctorDao.php';
 $doctor=new DoctorDao();
 if (isset($_SESSION['baby_id'])){
-    $res=$doctor->assignOneSlot($_SESSION['doc_id'],$_SESSION['baby_id']);
+    $res=$doctor->assignOneSlot($_SESSION['baby_id']);
     if ($res->num_rows>0){
-        echo 'You have already assigned this doctor';
+        echo 'You have already assigned a doctor';
     }
     else{
         if (isset($_POST['updateDoc1'])){

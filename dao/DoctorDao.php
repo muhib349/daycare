@@ -7,10 +7,10 @@ class DoctorDao implements Doctor
         return new mysqli('localhost','root','__muhib','daycare');
     }
 
-    public function assignOneSlot($doc_id, $baby_id)
+    public function assignOneSlot($baby_id)
     {
         $db=$this->getConntection();
-        $sql = "SELECT * FROM `doctors` WHERE (`slot-1`=$baby_id OR `slot-2`=$baby_id OR `slot-3`=$baby_id) AND doc_id=$doc_id";
+        $sql = "SELECT * FROM `doctors` WHERE `slot-1`=$baby_id OR `slot-2`=$baby_id OR `slot-3`=$baby_id";
         $res=$db->query($sql);
         $db->close();
         return $res;
@@ -90,7 +90,7 @@ class DoctorDao implements Doctor
     {
         $db=$this->getConntection();
         $sql = "UPDATE `doctors` SET `slot-1`=-1 WHERE doc_id=$doc_id";
-        $res=$db->query($sql);
+        $db->query($sql);
         $db->close();
     }
 
@@ -98,7 +98,7 @@ class DoctorDao implements Doctor
     {
         $db=$this->getConntection();
         $sql = "UPDATE `doctors` SET `slot-2`=-1 WHERE doc_id=$doc_id";
-        $res=$db->query($sql);
+        $db->query($sql);
         $db->close();
     }
 
@@ -106,7 +106,7 @@ class DoctorDao implements Doctor
     {
         $db=$this->getConntection();
         $sql = "UPDATE `doctors` SET `slot-3`=-1 WHERE doc_id=$doc_id";
-        $res=$db->query($sql);
+        $db->query($sql);
         $db->close();
     }
 
@@ -114,7 +114,7 @@ class DoctorDao implements Doctor
     {
         $db=$this->getConntection();
         $sql = "UPDATE `doctors` SET `slot-1`=0 WHERE doc_id=$doc_id";
-        $res=$db->query($sql);
+       $db->query($sql);
         $db->close();
     }
 
@@ -130,7 +130,7 @@ class DoctorDao implements Doctor
     {
         $db=$this->getConntection();
         $sql = "UPDATE `doctors` SET `slot-3`=0 WHERE doc_id=$doc_id";
-        $res=$db->query($sql);
+        $db->query($sql);
         $db->close();
     }
 
@@ -143,7 +143,7 @@ class DoctorDao implements Doctor
         return $res;
     }
 
-    public function findDoctor($name)
+    public function findDoctorAndSister($name)
     {
         $db = $this->getConntection();
         $sql = "SELECT tbl2.user_id,tbl2.id,tbl2.name,tbl2.usertype FROM (SELECT tbl.user_id,tbl.id,CONCAT(firstname,' ',lastname) AS name,users.usertype FROM

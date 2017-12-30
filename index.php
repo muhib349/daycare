@@ -20,16 +20,20 @@ if (isset($_POST['login-form'])){
         $_SESSION['user_id']=$row['user_id'];
         if($type=='guardian')
         {
-            header("Location:views/gaurdians/home.php");
+            /*header("Location:views/gaurdians/home.php");*/
+            echo '<script type="text/javascript"> window.location = "views/gaurdians/home.php"; </script>';
         }
         else if ($type=='doctor') {
-            header("Location:views/doctors/home.php");
+            /*header("Location:views/doctors/home.php");*/
+            echo '<script type="text/javascript"> window.location = "views/doctors/home.php"; </script>';
         }
         else if ($type=='sister'){
-            header("Location:views/sisters/home.php");
+            /*header("Location:views/sisters/home.php");*/
+            echo '<script type="text/javascript"> window.location = "views/sisters/home.php"; </script>';
         }
         else
-            echo $type;
+            /*header("Location:views/admin/home.php");*/
+            echo '<script type="text/javascript"> window.location = "views/admin/home.php"; </script>';
     }
     else {
         $message="Invalid username or password";
@@ -82,6 +86,7 @@ $res1=$guardian->showSisters();
 
     <!-- template skin -->
     <link id="t-colors" href="color/default.css" rel="stylesheet">
+    <link rel="icon" href="http://example.com/favicon.png">
 
 </head>
 <body id="page-top" data-spy="scroll" data-target=".navbar-custom">
@@ -188,43 +193,6 @@ $res1=$guardian->showSisters();
         </div>
     </div>
 </section>
-
-<!-- /Section: intro -->
-
-<!-- Section: boxes -->
-<section id="boxes" class="home-section paddingtop-80">
-
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-3 col-md-6">
-                <div class="wow fadeInUp" data-wow-delay="0.2s">
-                    <div class="box text-center">
-
-                        <i class="fa fa-check fa-3x circled bg-skin"></i>
-                        <h4 class="h-bold">Make an appoinment</h4>
-                        <p>
-                            Lorem ipsum dolor sit amet, nec te mollis utroque honestatis, ut utamur molestiae vix, graecis eligendi ne.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3 col-md-6">
-                <div class="wow fadeInUp" data-wow-delay="0.2s">
-                    <div class="box text-center">
-                        <i class="fa fa-user-md fa-3x circled bg-skin"></i>
-                        <h4 class="h-bold">Help by specialist</h4>
-                        <p>
-                            Lorem ipsum dolor sit amet, nec te mollis utroque honestatis, ut utamur molestiae vix, graecis eligendi ne.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</section>
-<!-- /Section: boxes -->
-
 
 <div class="row">
     <div class="col-sm-6">
@@ -440,7 +408,7 @@ $res1=$guardian->showSisters();
                 <div class="wow fadeInDown" data-wow-delay="0.1s">
                     <div class="widget">
                         <h5>Our location</h5>
-                        <p>The Suithouse V303, Kuningan City, Jakarta Indonesia 12940</p>
+                        <p>xxxxxxxx</p>
 
                     </div>
                 </div>
@@ -466,21 +434,6 @@ $res1=$guardian->showSisters();
                     <div class="wow fadeInLeft" data-wow-delay="0.1s">
                         <div class="text-left">
                             <p>&copy;Copyright - Medicio Theme. All rights reserved.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-6">
-                    <div class="wow fadeInRight" data-wow-delay="0.1s">
-                        <div class="text-right">
-                            <div class="credits">
-                                <!--
-                                  All the links in the footer should remain intact.
-                                  You can delete the links only if you purchased the pro version.
-                                  Licensing information: https://bootstrapmade.com/license/
-                                  Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Medicio
-                                -->
-                                <a href="https://bootstrapmade.com/bootstrap-education-templates/">Bootstrap Education Templates</a> by BootstrapMade
-                            </div>
                         </div>
                     </div>
                 </div>

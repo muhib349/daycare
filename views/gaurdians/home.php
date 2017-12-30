@@ -14,6 +14,9 @@ if (isset($_SESSION['loggedin'])){
     $_SESSION['gfname']=$rw['firstname'];
     $_SESSION['glname']=$rw['lastname'];
 }
+else{
+    header('location:../../index.php');
+}
 if (isset($_POST['breg'])){
    $fname=$_POST['first_name'];
    $optradio=$_POST['optradio'];
@@ -58,6 +61,14 @@ $res1=$guardian->showSisters();
 <body>
 <div id="wrapper">
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <!-- search input field -->
+        <div id="custom-search-input">
+            <div class="input-group col-md-4">
+                <input type="text" class=" search-query form-control" name="search" id="search2" placeholder="Search doctor or sister" autocomplete="off" />
+                <div id="namelist2">
+                </div>
+            </div>
+        </div>
 
         <div class="container navigation">
             <div class="navbar-header page-scroll">
@@ -334,5 +345,6 @@ $res1=$guardian->showSisters();
 
 
 <?php include '../../template/js-library.php';?>
+<script src="../../resources/js/search.js"></script>
 </body>
 </html>

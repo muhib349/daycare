@@ -8,6 +8,10 @@
 
 interface Admin
 {
-    public function saveDoctors();
-    public function saveSisters();
+    public function saveDoctors($fname,$lname,$email,$about,$address);
+    public function saveSisters($fname,$lname,$email,$about,$address);
+    public function getBabyAndGuardian();
+    public function findDoctorByBabyId($baby_id);
+    public function findSisterByBabyId($baby_id);
+
 }

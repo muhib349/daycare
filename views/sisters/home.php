@@ -2,6 +2,8 @@
 session_start();
 include "../../dao/SistersDao.php";
 $sister=new SistersDao();
+$i=0;
+$j=0;
 if (isset($_SESSION['loggedin'])){
     $name=$_SESSION['username'];
     $tbl1=$sister->getSister($_SESSION['user_id']);
@@ -11,7 +13,7 @@ if (isset($_SESSION['loggedin'])){
         $_SESSION['fname']=$row1['firstname'];
         $_SESSION['lname']=$row1['lastname'];
         $tbl2=$sister->vistedBabyBySis($_SESSION['sis_id']);
-        $tbl3=$sister->isBooked($_SESSION['sis_id']);
+        $tbl3=$sister->currentAssignedBaby($_SESSION['sis_id']);
     }
 }
 else
@@ -57,24 +59,22 @@ else
 <div class="container">
     <div class="row">
         </br>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
             <h2><?php echo $_SESSION['fname'].' '.$_SESSION['lname'];?></h2>
 
             <?php if($tbl2->num_rows >0) : ?>
-                <table class="table table-hover">
+                <table class="table table-bordered">
                     <thead>
                     <tr>
+                        <th>#</th>
                         <th>Name</th>
-                        <th>Gender</th>
-                        <th>Age</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php while ($row2=$tbl2->fetch_assoc()): ?>
                         <tr>
-                            <td><?php echo $row2['name'];?></td>
-                            <td><?php echo $row2['gender'];?></td>
-                            <td><?php echo $row2['age'];?></td>
+                            <td><?php echo ++$j ?></td>
+                            <td><a href="#"><?php echo $row2['name'];?></a></td>
                         </tr>
                     <?php endwhile ?>
                     </tbody>
@@ -83,14 +83,33 @@ else
                 <h6>you haven't visited any baby yet.</h6>
             <?php endif ?>
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-8">
             <h1><span class="label label-info">Currently Assign Baby:</span></h1>
             <?php if ($tbl3->num_rows>0): ?>
-                <?php $row3=$tbl3->fetch_assoc(); ?>
-                <h4><?php echo $row3['name'];?></h4>
-                <h5><?php echo $row3['about'];?></h5>
+               <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Gender</th>
+                        <th>Age</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php while ($row3=$tbl3->fetch_assoc()): ?>
+                        <tr>
+                            <td><?php echo ++$i ?></td>
+                            <td><?php echo $row3['name'];?></td>
+                            <td><?php echo $row3['gender'];?></td>
+                            <td><?php echo $row3['age'];?></td>
+                            <td><span class="label label-info"><a href="#">view</a></span></td>
+                        </tr>
+                    <?php endwhile ?>
+                    </tbody>
+                </table>
                 <?else:?>
-                <h3>Empty</h3>
+                <h5>Your current baby list is empty</h5>
             <?php endif; ?>
         </div>
     </div>

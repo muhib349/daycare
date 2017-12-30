@@ -33,3 +33,21 @@ function updateDoc3() {
     });
 }
 
+function updateSis() {
+    $.ajax({
+        url:'../../ajax/assign_sis.php',
+        method:'POST',
+        data:{updatesis:1},
+        dataType:'JSON',
+        success:function (data) {
+            if (data['success']==1){
+                document.getElementById("btn4").disabled=true;
+                document.getElementById("btn4").value='Taken';
+                var num=$('#able').text();
+                $('#able').text(num-1);
+            }
+            $('#msg').html(data['msg']);
+        }
+    });
+}
+

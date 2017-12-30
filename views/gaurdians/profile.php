@@ -30,7 +30,6 @@ if(isset($_GET['sis_id'])){
     $sis_id=$_GET['sis_id'];
     $_SESSION['sis_id']=$sis_id;
     $res=$grdian->showSisterProfile($sis_id);
-    $booked=$sis->isBooked($sis_id);
     $tab_rev=$grdian->getsisReviews($sis_id);
     $rating_tab=$grdian->getRatingSis($sis_id);
 }
@@ -93,7 +92,10 @@ if ($res->num_rows>0)
             <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8">
                 <div class="container" style="border-bottom:1px solid black">
                     <h2><?php echo $row['firstname'].' '.$row['lastname']; ?><span class="badge custom-badge red pull-right">Rating:<?php echo $rating; ?></span></h2>
-                    <h6><span><?php echo $row['about'];?></span></h6>
+                    <p><?php echo $row['about'];?></p>
+                    <? if ($type=='sister'): ?>
+                    <h6><span class="label label-info">available: <label id="able"></label></span></h6>
+                    <? endif ;?>
                 </div>
                 <hr>
                 <ul class="container details">
@@ -122,7 +124,7 @@ if ($res->num_rows>0)
                         </tbody>
                     </table>
                     <? else: ?>
-                    <h1>sister</h1>
+                    <input onclick="updateSis()" type="button" id="btn4" value="Assign" class="btn btn-primary">
                 <? endif; ?>
                 <div>
                     <span id="msg" class="label label-success"></span>
@@ -145,5 +147,6 @@ if ($res->num_rows>0)
 <?php include '../../template/js-library.php';?>
 <script src="../../resources/js/gprofile.js"></script>
 <script src="../../resources/js/profile.js"></script>
+<script src="../../resources/js/sis_profile.js"></script>
 </body>
 </html>
